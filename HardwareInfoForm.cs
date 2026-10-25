@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Drawing;
 using System.Management;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using LibreHardwareMonitor.Hardware;
 
-namespace MaxibackCleaner
+namespace NexoSupportToolKit
 {
     public class HardwareInfoForm : Form
     {
@@ -30,7 +30,7 @@ namespace MaxibackCleaner
 
         private void BuildInterface()
         {
-            Text = "Maxiback Optimize - Componentes del equipo";
+            Text = "Nexo Support Toolkit - Componentes del equipo";
             StartPosition = FormStartPosition.CenterParent;
             MinimumSize = new Size(700, 550);
             Size = new Size(800, 680);

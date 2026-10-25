@@ -1,11 +1,11 @@
 using System;
-using MaxibackCleaner.Models;
-using MaxibackCleaner.Services;
+using NexoSupportToolKit.Models;
+using NexoSupportToolKit.Services;
 using System.Windows.Forms;
 using System.Text;
 using System.Text.Json;
 
-namespace MaxibackCleaner
+namespace NexoSupportToolKit
 {
     internal static class Program
     {
@@ -13,7 +13,7 @@ namespace MaxibackCleaner
         static void Main(string[] args)
         {
             // Este modo se ejecuta en una segunda instancia elevada por UAC.
-            // No muestra login/licencia: solo realiza la operación solicitada.
+            // No muestra ventanas adicionales: realiza la operación solicitada.
             if (args.Length >= 2 && args[0].Equals("--create-bootable-usb", StringComparison.OrdinalIgnoreCase))
             {
                 try
@@ -29,7 +29,7 @@ namespace MaxibackCleaner
                     try
                     {
                         MessageBox.Show("No se pudo iniciar la creación del USB.\n\n" + ex.Message,
-                            "Maxiback Cleaner - USB", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            "Nexo Support Toolkit - USB", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     catch { }
                     Environment.ExitCode = 1;
@@ -89,18 +89,6 @@ namespace MaxibackCleaner
 
             // Inicio normal de la aplicación.
             ApplicationConfiguration.Initialize();
-
-            // Verificar la licencia.
-            if (!LicenseService.IsActivated())
-            {
-                using (LicenseForm licenseForm = new LicenseForm())
-                {
-                    if (licenseForm.ShowDialog() != DialogResult.OK)
-                    {
-                        return;
-                    }
-                }
-            }
 
             // Abrir la ventana principal.
             Application.Run(new Form1());

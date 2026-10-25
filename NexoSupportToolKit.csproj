@@ -1,8 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0-windows</TargetFramework>
+    <AssemblyName>NexoSupportToolKit</AssemblyName>
+    <RootNamespace>NexoSupportToolKit</RootNamespace>
+    <AssemblyTitle>Nexo Support Toolkit</AssemblyTitle>
+    <Product>Nexo Support Toolkit</Product>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>

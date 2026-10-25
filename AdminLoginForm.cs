@@ -1,10 +1,10 @@
-﻿
+
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using MaxibackCleaner.Services;
+using NexoSupportToolKit.Services;
 
-namespace MaxibackCleaner
+namespace NexoSupportToolKit
 {
     public class AdminLoginForm : Form
     {
@@ -24,7 +24,7 @@ namespace MaxibackCleaner
 
             Label title = new Label
             {
-                Text = "Maxiback Cleaner",
+                Text = "Nexo Support Toolkit",
                 Font = new Font("Segoe UI", 15, FontStyle.Bold),
                 AutoSize = true,
                 Location = new Point(25, 20)

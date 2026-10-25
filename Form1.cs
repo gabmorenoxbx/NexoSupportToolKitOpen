@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 using System.Text;
 using System.Text.Json;
 using System.Windows.Forms;
-using MaxibackCleaner.Models;
-using MaxibackCleaner.Services;
+using NexoSupportToolKit.Models;
+using NexoSupportToolKit.Services;
 
-namespace MaxibackCleaner
+namespace NexoSupportToolKit
 {
     public partial class Form1 : Form
     {
@@ -39,11 +39,13 @@ namespace MaxibackCleaner
         private Button btnOptimizationNav = null!;
         private Button btnDiagnosticsNav = null!;
         private Button btnUsbBootableNav = null!;
+        private Button btnOperatingSystemsNav = null!;
 
         private Panel sidebar = null!;
         private Panel contentPanel = null!;
         private Panel cleaningView = null!;
         private Panel usbBootableView = null!;
+        private Panel operatingSystemsView = null!;
         private WindowsOptimizationForm optimizationView = null!;
 
         // Controles y estado del creador de USB booteables.
@@ -69,7 +71,7 @@ namespace MaxibackCleaner
         private readonly string frequencyFile = Path.Combine(
             Environment.GetFolderPath(
                 Environment.SpecialFolder.LocalApplicationData),
-            "MaxibackCleaner",
+            "NexoSupportToolKit",
             "frequency.txt");
 
         private readonly Color backgroundColor = Color.FromArgb(15, 18, 25);
@@ -129,7 +131,7 @@ namespace MaxibackCleaner
 
         private void BuildInterface()
         {
-            Text = "Maxiback Optimize";
+            Text = "Nexo Support Toolkit";
             StartPosition = FormStartPosition.CenterScreen;
             MinimumSize = new Size(900, 620);
             Size = new Size(1120, 740);
@@ -215,10 +217,10 @@ namespace MaxibackCleaner
 
             var brand = new Label
             {
-                Text = "MAXIBACK\nOPTIMIZE",
+                Text = "NEXO\nSUPPORT TOOLKIT",
                 Dock = DockStyle.Top,
                 Height = 65,
-                Font = new Font("Segoe UI", 17F, FontStyle.Bold),
+                Font = new Font("Segoe UI", 15F, FontStyle.Bold),
                 ForeColor = textColor,
                 TextAlign = ContentAlignment.MiddleCenter
             };
@@ -243,7 +245,7 @@ namespace MaxibackCleaner
             var nav = new FlowLayoutPanel
             {
                 Dock = DockStyle.Top,
-                Height = 226,
+                Height = 286,
                 FlowDirection = FlowDirection.TopDown,
                 WrapContents = false,
                 AutoScroll = false,
@@ -259,16 +261,19 @@ namespace MaxibackCleaner
                 CreateNavButton("   Diagnóstico del sistema");
             btnUsbBootableNav =
                 CreateNavButton("   USB Booteable");
+            btnOperatingSystemsNav = CreateNavButton("   Sistemas operativos");
 
             btnCleaningNav.Click += (_, _) => ShowSection("cleaning");
             btnOptimizationNav.Click += (_, _) => ShowSection("optimization");
             btnDiagnosticsNav.Click += (_, _) => ShowSection("diagnostics");
             btnUsbBootableNav.Click += (_, _) => ShowSection("usb");
+            btnOperatingSystemsNav.Click += (_, _) => ShowSection("operating-systems");
 
             nav.Controls.Add(btnCleaningNav);
             nav.Controls.Add(btnOptimizationNav);
             nav.Controls.Add(btnDiagnosticsNav);
             nav.Controls.Add(btnUsbBootableNav);
+            nav.Controls.Add(btnOperatingSystemsNav);
 
             var sidebarFooter = new Label
             {
@@ -350,10 +355,12 @@ namespace MaxibackCleaner
             bool showOptimization = section == "optimization";
             bool showDiagnostics = section == "diagnostics";
             bool showUsb = section == "usb";
+            bool showOperatingSystems = section == "operating-systems";
 
             cleaningView.Visible = showCleaning;
             optimizationView.Visible = showOptimization || showDiagnostics;
             usbBootableView.Visible = showUsb;
+            operatingSystemsView.Visible = showOperatingSystems;
 
             if (showOptimization)
                 optimizationView.ShowSection("optimization");
@@ -364,12 +371,18 @@ namespace MaxibackCleaner
             SetNavButtonState(btnOptimizationNav, showOptimization);
             SetNavButtonState(btnDiagnosticsNav, showDiagnostics);
             SetNavButtonState(btnUsbBootableNav, showUsb);
+            SetNavButtonState(btnOperatingSystemsNav, showOperatingSystems);
 
             if (showCleaning)
             {
                 cleaningView.BringToFront();
                 contentPanel.Controls.SetChildIndex(cleaningView, 0);
                 txtFolder.Focus();
+            }
+            else if (showOperatingSystems)
+            {
+                operatingSystemsView.BringToFront();
+                contentPanel.Controls.SetChildIndex(operatingSystemsView, 0);
             }
             else if (showUsb)
             {
@@ -623,9 +636,66 @@ namespace MaxibackCleaner
             usbBootableView = BuildUsbBootableView();
             contentPanel.Controls.Add(usbBootableView);
             usbBootableView.Visible = false;
+
+            operatingSystemsView = BuildOperatingSystemsView();
+            contentPanel.Controls.Add(operatingSystemsView);
+            operatingSystemsView.Visible = false;
         }
 
 
+        private Panel BuildOperatingSystemsView()
+        {
+            var view = new Panel { Dock = DockStyle.Fill, BackColor = backgroundColor, Padding = new Padding(30, 26, 30, 20), AutoScroll = true };
+            var flow = new FlowLayoutPanel { Dock = DockStyle.Top, AutoSize = true, FlowDirection = FlowDirection.TopDown, WrapContents = false, BackColor = backgroundColor };
+            flow.Controls.Add(new Label { Text = "Sistemas operativos", AutoSize = true, ForeColor = textColor, Font = new Font("Segoe UI", 23F, FontStyle.Bold), Margin = new Padding(0, 0, 0, 12) });
+            flow.Controls.Add(new Label { Text = "Enlaces oficiales de descarga e instalación.", AutoSize = true, ForeColor = mutedColor, Margin = new Padding(0, 0, 0, 18) });
+            AddOperatingSystemLinks(flow);
+            flow.Controls.Add(new Label
+            {
+                Text = "La arquitectura varía según el equipo. Preparar un USB puede borrar su contenido.",
+                AutoSize = true,
+                MaximumSize = new Size(760, 0),
+                ForeColor = mutedColor,
+                Margin = new Padding(0, 18, 0, 0)
+            });
+            view.Controls.Add(flow);
+            return view;
+        }
+        private void AddOperatingSystemLinks(FlowLayoutPanel flow)
+        {
+            var systems = new (string Name, string Url)[]
+            {
+                ("Windows 11", "https://www.microsoft.com/software-download/windows11"),
+                ("Windows 10 (soporte finalizado)", "https://www.microsoft.com/software-download/windows10ISO"),
+                ("Ubuntu Desktop", "https://ubuntu.com/download/desktop"),
+                ("Linux Mint", "https://linuxmint.com/download.php"),
+                ("Fedora Workstation", "https://fedoraproject.org/workstation/download/"),
+                ("Debian", "https://www.debian.org/distrib/"),
+                ("macOS (Mac compatibles)", "https://support.apple.com/es-es/102662")
+            };
+            foreach (var item in systems)
+            {
+                var link = new LinkLabel
+                {
+                    Text = item.Name + "  ↗",
+                    AutoSize = true,
+                    LinkColor = Color.FromArgb(100, 160, 255),
+                    ActiveLinkColor = Color.White,
+                    Font = new Font("Segoe UI", 11F, FontStyle.Bold),
+                    Margin = new Padding(0, 8, 0, 8),
+                    Tag = item.Url
+                };
+                link.LinkArea = new LinkArea(0, link.Text.Length);
+                link.LinkClicked += OpenOperatingSystemLink;
+                flow.Controls.Add(link);
+            }
+        }
+        private void OpenOperatingSystemLink(object? sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (sender is not LinkLabel link || link.Tag is not string url) return;
+            try { Process.Start(new ProcessStartInfo(url) { UseShellExecute = true }); }
+            catch (Exception ex) { logger.Write("No se pudo abrir el enlace: " + ex.Message); }
+        }
         private Panel BuildUsbBootableView()
         {
             var view = new Panel
@@ -932,7 +1002,7 @@ namespace MaxibackCleaner
             txtVolumeLabel = new TextBox
             {
                 Name = "txtVolumeLabel",
-                Text = "MAXIBACK",
+                Text = "NEXO",
                 Dock = DockStyle.Top,
                 BackColor = inputColor,
                 ForeColor = textColor,
@@ -1865,7 +1935,7 @@ namespace MaxibackCleaner
                 MessageBox.Show(
                     this,
                     "Seleccioná una carpeta primero.",
-                    "Maxiback Optimize",
+                    "Nexo Support Toolkit",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
 
@@ -1877,7 +1947,7 @@ namespace MaxibackCleaner
                 MessageBox.Show(
                     this,
                     "La carpeta seleccionada no existe.",
-                    "Maxiback Optimize",
+                    "Nexo Support Toolkit",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
 
@@ -2044,7 +2114,7 @@ namespace MaxibackCleaner
             var trayMenu = new ContextMenuStrip();
 
             trayMenu.Items.Add(
-                "Abrir Maxiback Optimize",
+                "Abrir Nexo Support Toolkit",
                 null,
                 (_, _) => ShowWithAdminLogin());
 
@@ -2072,7 +2142,7 @@ namespace MaxibackCleaner
 
             trayIcon = new NotifyIcon
             {
-                Text = "Maxiback Optimize",
+                Text = "Nexo Support Toolkit",
                 Icon = Icon ?? SystemIcons.Application,
                 ContextMenuStrip = trayMenu,
                 Visible = true
@@ -2121,7 +2191,7 @@ namespace MaxibackCleaner
 
                 trayIcon?.ShowBalloonTip(
                     5000,
-                    "Maxiback Optimize",
+                    "Nexo Support Toolkit",
                     "Hay archivos que alcanzaron la antigüedad configurada. Podés ejecutar la limpieza.",
                     ToolTipIcon.Info);
 
@@ -2203,7 +2273,7 @@ namespace MaxibackCleaner
                 {
                     trayIcon?.ShowBalloonTip(
                         4000,
-                        "Maxiback Optimize",
+                        "Nexo Support Toolkit",
                         "Configurá una carpeta válida antes de limpiar.",
                         ToolTipIcon.Warning);
 
@@ -2221,7 +2291,7 @@ namespace MaxibackCleaner
 
                 trayIcon?.ShowBalloonTip(
                     4000,
-                    "Maxiback Optimize",
+                    "Nexo Support Toolkit",
                     $"Limpieza por antigüedad finalizada. Eliminados: {deleted}.",
                     ToolTipIcon.Info);
             }
@@ -2231,7 +2301,7 @@ namespace MaxibackCleaner
 
                 trayIcon?.ShowBalloonTip(
                     4000,
-                    "Maxiback Optimize",
+                    "Nexo Support Toolkit",
                     "No se pudo completar la limpieza. Revisá el registro.",
                     ToolTipIcon.Error);
             }
@@ -2269,7 +2339,7 @@ namespace MaxibackCleaner
 
                 trayIcon?.ShowBalloonTip(
                     2500,
-                    "Maxiback Optimize",
+                    "Nexo Support Toolkit",
                     "La aplicación continúa ejecutándose en segundo plano.",
                     ToolTipIcon.Info);
 

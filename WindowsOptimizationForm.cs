@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Management;
 using System.Text.RegularExpressions;
 
-namespace MaxibackCleaner
+namespace NexoSupportToolKit
 {
     public class WindowsOptimizationForm : Form
     {
@@ -91,7 +91,7 @@ namespace MaxibackCleaner
 
         private void BuildInterface()
         {
-            Text = "Maxiback Optimize";
+            Text = "Nexo Support Toolkit";
             StartPosition = FormStartPosition.CenterParent;
             Size = new Size(1180, 850);
             MinimumSize = new Size(650, 500);
@@ -1300,7 +1300,7 @@ namespace MaxibackCleaner
 
             MessageBox.Show(
                 message + "\n\n" + ex.Message,
-                "Maxiback Optimize",
+                "Nexo Support Toolkit",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
         }

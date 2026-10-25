@@ -1,8 +1,8 @@
-Maxiback Optimize
+Nexo Support Toolkit
 
-Maxiback Optimize (MaxibackCleaner) es una aplicación de escritorio para Windows desarrollada en C# con Windows Forms. Reúne en un solo lugar herramientas de limpieza, optimización, diagnóstico y creación de USB booteables para mantener equipos en buen estado.
+Nexo Support Toolkit (NexoSupportToolKit) es una aplicación de escritorio para Windows desarrollada en C# con Windows Forms. Reúne en un solo lugar herramientas de limpieza, optimización, diagnóstico y creación de USB booteables para mantener equipos en buen estado.
 
-El proyecto nació como una herramienta de limpieza automática para equipos utilizados en bares con el sistema MaxiRest, con el objetivo de evitar la acumulación de archivos innecesarios y las limpiezas manuales periódicas. Con el tiempo creció hasta convertirse en una suite de mantenimiento y sigue sumando funciones.
+El proyecto nació como una herramienta de limpieza automática para evitar la acumulación de archivos innecesarios y las limpiezas manuales periódicas. Con el tiempo creció hasta convertirse en una suite de mantenimiento y sigue sumando funciones.
 
 Herramientas principales
 
@@ -60,3 +60,9 @@ En desarrollo activo. Se seguirán incorporando nuevas herramientas de mantenimi
 Objetivo del proyecto
 
 Ofrecer una herramienta liviana y configurable que automatice el mantenimiento de equipos Windows, reduzca tareas repetitivas y concentre en una sola aplicación las utilidades que un técnico usa a diario.
+
+Licencia
+
+Este proyecto se distribuye bajo GNU General Public License, versión 3 o cualquier versión posterior, a elección de quien lo reciba (GPL-3.0-or-later). Se puede usar, estudiar, modificar y redistribuir conforme a sus términos. Las versiones derivadas que se distribuyan deben conservar esta misma libertad y cumplir la GPL. El texto completo está en el archivo LICENSE.
+
+La aplicación no requiere una clave de activación para iniciar.

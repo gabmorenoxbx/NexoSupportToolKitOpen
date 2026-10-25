@@ -1,5 +1,5 @@
-﻿
-namespace MaxibackCleaner
+
+namespace NexoSupportToolKit
 {
     partial class Form1
     {
@@ -25,7 +25,7 @@ namespace MaxibackCleaner
             MinimumSize = new System.Drawing.Size(900, 600);
             Name = "Form1";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            Text = "Maxiback Optimize";
+            Text = "Nexo Support Toolkit";
 
             ResumeLayout(false);
         }

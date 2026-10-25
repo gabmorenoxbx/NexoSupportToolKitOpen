@@ -3,9 +3,9 @@ using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MaxibackCleaner.Services;
+using NexoSupportToolKit.Services;
 
-namespace MaxibackCleaner
+namespace NexoSupportToolKit
 {
     /// <summary>
     /// Ventana auxiliar que se ejecuta elevada únicamente durante la creación
@@ -31,7 +31,7 @@ namespace MaxibackCleaner
         public UsbCreationElevatedForm(UsbBootOptions options)
         {
             this.options = options;
-            Text = "Maxiback Cleaner - Creación USB booteable";
+            Text = "Nexo Support Toolkit - Creación USB booteable";
             StartPosition = FormStartPosition.CenterScreen;
             ClientSize = new Size(680, 430);
             MinimumSize = new Size(620, 400);
